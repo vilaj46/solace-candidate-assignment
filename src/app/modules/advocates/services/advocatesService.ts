@@ -5,7 +5,6 @@ export const getAdvocates = (): Promise<{
 }> =>
 	fetch('/api/advocates').then((response) =>
 		response.json().then((jsonResponse) => {
-			console.log(jsonResponse)
 			return jsonResponse
 		})
 	)
