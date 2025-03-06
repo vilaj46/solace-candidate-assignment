@@ -1,48 +1,22 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
-import { TAdvocate } from '@/types'
-import { getAdvocates } from './services/advocatesService'
+import { TAdvocate } from '@/app/modules/advocates/types'
+import { useAdvocates } from '@/app/modules/advocates/hooks/useAdvocates'
 
 export default function Home() {
-	const [advocates, setAdvocates] = useState<Array<TAdvocate>>([])
-	const [filteredAdvocates, setFilteredAdvocates] = useState<
-		Array<TAdvocate>
-	>([])
+	const DEFAULT_SEARCH = ''
 
-	useEffect(() => {
-		console.log('fetching advocates...')
-		getAdvocates().then((response) => {
-			setAdvocates(response.data)
-			setFilteredAdvocates(response.data)
-		})
-	}, [])
+	const { filterAdvocates } = useAdvocates()
+	const [search, setSearch] = useState(DEFAULT_SEARCH)
 
-	const onChange = (e) => {
-		const searchTerm = e.target.value
+	const filteredAdvocates: Array<TAdvocate> = filterAdvocates(search)
 
-		document.getElementById('search-term').innerHTML = searchTerm
+	const onChange = (e: ChangeEvent<HTMLInputElement>) =>
+		setSearch(e.target.value)
 
-		console.log('filtering advocates...')
-		const filteredAdvocates = advocates.filter((advocate) => {
-			return (
-				advocate.firstName.includes(searchTerm) ||
-				advocate.lastName.includes(searchTerm) ||
-				advocate.city.includes(searchTerm) ||
-				advocate.degree.includes(searchTerm) ||
-				advocate.specialties.includes(searchTerm) ||
-				advocate.yearsOfExperience.includes(searchTerm)
-			)
-		})
-
-		setFilteredAdvocates(filteredAdvocates)
-	}
-
-	const onClick = () => {
-		console.log(advocates)
-		setFilteredAdvocates(advocates)
-	}
+	const onReset = () => setSearch(DEFAULT_SEARCH)
 
 	return (
 		<main style={{ margin: '24px' }}>
@@ -57,8 +31,9 @@ export default function Home() {
 				<input
 					style={{ border: '1px solid black' }}
 					onChange={onChange}
+					value={search}
 				/>
-				<button onClick={onClick}>Reset Search</button>
+				<button onClick={onReset}>Reset Search</button>
 			</div>
 			<br />
 			<br />
