@@ -2,6 +2,8 @@
 
 import { ChangeEvent, useState } from 'react'
 
+import { Heading } from './components/Heading/Heading'
+
 import { TAdvocate } from '@/app/modules/advocates/types'
 import { useAdvocates } from '@/app/modules/advocates/hooks/useAdvocates'
 
@@ -19,10 +21,13 @@ export default function Home() {
 	const onReset = () => setSearch(DEFAULT_SEARCH)
 
 	return (
-		<main style={{ margin: '24px' }}>
-			<h1>Solace Advocates</h1>
-			<br />
-			<br />
+		<main className='m-6'>
+			<Heading
+				className='mb-10'
+				TagType='h1'
+			>
+				Solace Advocates
+			</Heading>
 			<div>
 				<p>Search</p>
 				<p>
