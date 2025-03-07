@@ -2,10 +2,12 @@
 
 import { ChangeEvent, useState } from 'react'
 
-import { Heading } from './components/Heading/Heading'
-import { SearchForm } from './components/SearchForm/SearchForm'
+import { Heading } from '@/app/components/Heading/Heading'
+import { SearchForm } from '@/app/components/SearchForm/SearchForm'
+import { Table } from '@/app/components/Table/Table'
 
 import { TAdvocate } from '@/app/modules/advocates/types'
+import { TTableHeader } from '@/app/components/Table/Table.types'
 import { useAdvocates } from '@/app/modules/advocates/hooks/useAdvocates'
 
 export default function Home() {
@@ -20,6 +22,37 @@ export default function Home() {
 		setSearch(e.target.value)
 
 	const onSeachReset = () => setSearch(DEFAULT_SEARCH)
+
+	const tableHeaders: Array<TTableHeader> = [
+		{
+			label: 'First Name',
+			property: 'firstName',
+		},
+		{
+			label: 'Last Name',
+			property: 'lastName',
+		},
+		{
+			label: 'City',
+			property: 'city',
+		},
+		{
+			label: 'Degree',
+			property: 'degree',
+		},
+		{
+			label: 'Specialties',
+			property: 'specialties',
+		},
+		{
+			label: 'Years of Experience',
+			property: 'yearsOfExperience',
+		},
+		{
+			label: 'Phone Number',
+			property: 'phoneNumber',
+		},
+	]
 
 	return (
 		<main className='m-6'>
@@ -41,36 +74,10 @@ export default function Home() {
 					value={search}
 				/>
 			</div>
-			<table>
-				<thead>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>City</th>
-					<th>Degree</th>
-					<th>Specialties</th>
-					<th>Years of Experience</th>
-					<th>Phone Number</th>
-				</thead>
-				<tbody>
-					{filteredAdvocates.map((advocate) => {
-						return (
-							<tr key={advocate.firstName + advocate.lastName}>
-								<td>{advocate.firstName}</td>
-								<td>{advocate.lastName}</td>
-								<td>{advocate.city}</td>
-								<td>{advocate.degree}</td>
-								<td>
-									{advocate.specialties.map((s) => (
-										<div key={s}>{s}</div>
-									))}
-								</td>
-								<td>{advocate.yearsOfExperience}</td>
-								<td>{advocate.phoneNumber}</td>
-							</tr>
-						)
-					})}
-				</tbody>
-			</table>
+			<Table
+				data={filteredAdvocates}
+				headers={tableHeaders}
+			/>
 		</main>
 	)
 }
