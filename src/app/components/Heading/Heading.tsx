@@ -1,7 +1,5 @@
-import { ReactNode } from 'react'
 import {
 	EHeadingTagType,
-	THeadingTagType,
 	THeading,
 } from '@/app/components/Heading/Heading.types'
 

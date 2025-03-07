@@ -1,15 +1,6 @@
-import { ChangeEvent, MouseEvent, MouseEventHandler, useRef } from 'react'
+import { MouseEvent, useRef } from 'react'
 
-type TSearchForm = {
-	buttonLabel: string
-	htmlFor: string
-	id: string
-	label: string
-	onButtonClick: () => void
-	onChange: (e: ChangeEvent<HTMLInputElement>) => void
-	placeholder: string
-	value?: string
-}
+import { TSearchForm } from '@/app/components/SearchForm/SearchForm.types'
 
 const SearchIcon = () => (
 	<svg
