@@ -3,6 +3,7 @@
 import { ChangeEvent, useState } from 'react'
 
 import { Heading } from './components/Heading/Heading'
+import { SearchForm } from './components/SearchForm/SearchForm'
 
 import { TAdvocate } from '@/app/modules/advocates/types'
 import { useAdvocates } from '@/app/modules/advocates/hooks/useAdvocates'
@@ -15,10 +16,10 @@ export default function Home() {
 
 	const filteredAdvocates: Array<TAdvocate> = filterAdvocates(search)
 
-	const onChange = (e: ChangeEvent<HTMLInputElement>) =>
+	const onSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
 		setSearch(e.target.value)
 
-	const onReset = () => setSearch(DEFAULT_SEARCH)
+	const onSeachReset = () => setSearch(DEFAULT_SEARCH)
 
 	return (
 		<main className='m-6'>
@@ -28,20 +29,18 @@ export default function Home() {
 			>
 				Solace Advocates
 			</Heading>
-			<div>
-				<p>Search</p>
-				<p>
-					Searching for: <span id='search-term'></span>
-				</p>
-				<input
-					style={{ border: '1px solid black' }}
-					onChange={onChange}
+			<div className='mb-10'>
+				<SearchForm
+					buttonLabel='Reset'
+					htmlFor='advocate-search'
+					id='advocate-search'
+					label='Advocate Search'
+					onButtonClick={onSeachReset}
+					onChange={onSearchChange}
+					placeholder='Start typing...'
 					value={search}
 				/>
-				<button onClick={onReset}>Reset Search</button>
 			</div>
-			<br />
-			<br />
 			<table>
 				<thead>
 					<th>First Name</th>
