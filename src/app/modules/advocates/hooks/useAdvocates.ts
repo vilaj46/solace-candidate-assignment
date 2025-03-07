@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { createAdvocateId } from '@/app/modules/advocates/utils'
 import { getAdvocates } from '@/app/modules/advocates/services/advocatesService'
@@ -11,6 +11,8 @@ type TAdvocateHookState = {
 }
 
 export const useAdvocates = () => {
+	const isMounted = useRef(false)
+
 	const [state, setState] = useState<TAdvocateHookState>({
 		advocates: [],
 		isError: false,
@@ -18,6 +20,10 @@ export const useAdvocates = () => {
 	})
 
 	useEffect(() => {
+		if (isMounted.current) {
+			return
+		}
+
 		getAdvocates()
 			.then((response) => {
 				setState((state) => ({
@@ -37,6 +43,7 @@ export const useAdvocates = () => {
 					isLoading: false,
 				}))
 			})
+		isMounted.current = true
 	}, [])
 
 	const filterAdvocates = (filter?: string) => {
